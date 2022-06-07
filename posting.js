@@ -2,12 +2,14 @@
 
 class JobPostingPage {
 
-    constructor(app) {
+    constructor(app, postingId) {
         this.app = app;
-        this.datastore = new Datastore(this);
-        this.theme = null;
-        
+
+        this.theme = null;        
         this.getTheme(app.defaultThemeId);
+
+        this.datastore = new Datastore(this);
+        this.datastore.getJobPosting(postingId, this.showJobPosting.bind(this));
     }
 
     getTheme(themeId) {
@@ -26,29 +28,6 @@ class JobPostingPage {
                 updateTheme(data);
             }
         );
-    }
-
-    /*
-    Lifecycle method
-        - triggered before the page is shown to the user
-        - invoke callback() when page is ready to be displayed
-    */
-    onPrepareToShow(args, callback) {
-        callback();
-    }
-
-    /*
-    Lifecycle method
-        - triggered after the page is shown to the user
-    */
-    onShow(args) {
-        let postingId = (args && args.postingId) ? args.postingId : null;
-        
-        if (postingId) {
-            this.datastore.getJobPosting(postingId, this.showJobPosting.bind(this));
-        } else {
-            console.log(`can't find posting with id ${postingId}`);
-        }
     }
 
     showJobPosting(posting) {
@@ -72,7 +51,7 @@ class JobPostingPage {
             .setAttribute('href', `${posting.organizationLink}&utm_source=talentful&utm_medium=${platform}`);
 
         setTimeout(function() {
-            this.showJobPerksBadge(posting);
+            showJobPerksBadge(posting);
         }, 0);
     }
 
@@ -82,18 +61,17 @@ class JobPostingPage {
         let badge = badgeTemplate.cloneNode(true);
         badge.style.color = this.theme.color || 'orange';
         let messageElem = badge.children[2];
-        if (posting.perks.includes(1)) {
+        if (posting.perks.includes(43)) {
             messageElem.innerHTML += 'Free food!';
         }
-        if (posting.perks.includes(2)) {
+        if (posting.perks.includes(56)) {
             messageElem.innerHTML += 'Foosball!';
         }
-        badge.style.visibility = 'visible';
         let container = document.getElementById('badge-container');
         container.appendChild(badge);
         setTimeout(() => {
-            badge.style.visibility = 'hidden';
-        }, 10000);
+            badge.style.visibility = 'visible';
+        }, 500);
     }
 
 }
