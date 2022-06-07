@@ -8,7 +8,7 @@ class JobPostingPage {
         this.theme = null;
         
         this.getTheme(app.defaultThemeId);
-	}
+    }
 
     getTheme(themeId) {
         let pageContainer = document.getElementById('posting-container');
@@ -55,7 +55,7 @@ class JobPostingPage {
         let postingSummary = document.getElementById('posting-summary');
         postingSummary.className = postingSummary.className + ' ' + this.theme.className;
         postingSummary.innerHTML = `Role: ${posting.summary}`;
-		
+        
         let postingDescription = document.getElementById('posting-description');
         postingDescription.innerHTML = `${posting.description}`;
         postingDescription.className = postingDescription.className + ' ' + this.theme.className;
@@ -72,7 +72,7 @@ class JobPostingPage {
             .setAttribute('href', `${posting.organizationLink}&utm_source=talentful&utm_medium=${platform}`);
 
         setTimeout(function() {
-			this.showJobPerksBadge(posting);
+            this.showJobPerksBadge(posting);
         }, 0);
     }
 
@@ -102,8 +102,8 @@ class Datastore {
 
     constructor(page) {
         this.host = page.app.host;
-		this.postings = {};
-	}
+        this.postings = {};
+    }
 
     getJobPosting(postingId, callback) {
         var that = this;
